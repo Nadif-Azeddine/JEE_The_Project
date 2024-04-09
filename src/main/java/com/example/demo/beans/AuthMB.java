@@ -1,5 +1,6 @@
-package com.example.demo.models;
+package com.example.demo.beans;
 
+import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
 import jakarta.annotation.PostConstruct;
@@ -22,7 +23,6 @@ public class AuthMB implements Serializable {
     private User userReg;
     private String email;
     private String password;
-
 
     public AuthMB() {
     }
@@ -66,21 +66,23 @@ public class AuthMB implements Serializable {
 
     public String register()
     {
-        FacesContext context = FacesContext.getCurrentInstance();
+
         if (userService.findByEmail(email) != null){
-            System.out.println("#########################################################email exist ######################################");
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"","The provided email is already used."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"","The provided email is already used."));
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             return "register";
         }
         userService.register(userReg);
+        this.loggedUser = userReg;
+        HttpSession session = SessionUtils.getSession();
+        session.setAttribute("user", userReg);
         return "home";
     }
 
     public String login()
     {
         FacesContext context = FacesContext.getCurrentInstance();
-
+        System.out.println("###########################" + password + email);
         User userCheck = userService.login(email, password);
         if(userCheck != null)
         {
@@ -89,21 +91,21 @@ public class AuthMB implements Serializable {
             session.setAttribute("user", userCheck);
             return "home";
         }else{
-            context.addMessage(null, new FacesMessage("Wrong email or password"));
-            context.addMessage(null, new FacesMessage("Wrong email or password"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"", "Wrong email or password"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             return "login";
         }
     }
-    public String authenticate()
-    {
-        if(this.loggedUser != null) return "";
-        return "login?faces-redirect=true";
-    }
+
     public String logout() {
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
         this.loggedUser = null;
-        return "login?faces-redirect=true";
+        return "login";
+    }
+
+    public boolean isAdmin(){
+        return this.loggedUser != null && this.loggedUser.getRole().equals(Role.ADMIN);
     }
 
 }

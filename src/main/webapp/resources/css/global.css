@@ -15,12 +15,12 @@
     --cc-gray-dark: rgba(67, 89, 113, 0.8);
     --cc-gray-25: rgba(67, 89, 113, 0.025);
     --cc-gray-50: rgba(67, 89, 113, 0.05);
-    --cc-primary: #6164ec;
+    --cc-primary: rgb(97, 100, 236);
     --cc-secondary: #8592a3;
     --cc-success: #71dd37;
     --cc-info: #03c3ec;
     --cc-warning: #ffab00;
-    --cc-danger: #ff3e1d;
+    --cc-danger: #dc2626;
     --cc-light: #fcfdfd;
     --cc-dark: #233446;
     --cc-gray: rgba(67, 89, 113, 0.1);
@@ -28,6 +28,7 @@
     --cc-secondary-rgb: 133, 146, 163;
     --cc-success-rgb: 113, 221, 55;
     --cc-info-rgb: 3, 195, 236;
+    --cc-btn-hover-color: 255, 255, 255;
     --cc-warning-rgb: 255, 171, 0;
     --cc-danger-rgb: 255, 62, 29;
     --cc-light-rgb: 252, 253, 253;
@@ -45,8 +46,8 @@
     --cc-body-font-size: 0.9375rem;
     --cc-body-font-weight: 400;
     --cc-body-line-height: 1.53;
-    --cc-body-color: #586473;
-    --cc-body-bg: #fdfafa;
+    --cc-body-color: #434551;
+    --cc-body-bg: #f7f9fb;
     --cc-border-width: 1px;
     --cc-border-style: solid;
     --cc-border-color: #d9dee3;
@@ -62,6 +63,28 @@
     --cc-code-color: #e83e8c;
     --cc-highlight-bg: #ffeecc
 }
+
+body, html, div{
+    /* Target Chrome, Safari, and Edge for scrollbar track and thumb */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #F5F5F5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #6164ECFF;
+        border-radius: 6px;
+    }
+
+    /* Target Firefox for scrollbar (fallback) */
+    scrollbar-width: thin;
+    scrollbar-width: 5px;
+    scrollbar-color: #6164ECFF transparent;
+}
+
 
 *,
 *::before,
@@ -87,7 +110,7 @@ body {
     line-height: var(--cc-body-line-height);
     color: var(--cc-body-color);
     text-align: var(--cc-body-text-align);
-    background-color: var(--cc-body-bg);
+    background: var(--cc-body-bg);
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(67, 89, 113, 0)
 }
@@ -116,7 +139,7 @@ h1,
     margin-bottom: 1rem;
     font-weight: 500;
     line-height: 1.1;
-    color: #566a7f
+    color: #3c4650
 }
 
 h1,
@@ -286,6 +309,10 @@ b,
 /* Largest */
 .text-6xl {
     font-size: 4.5rem; /* 72px */
+}
+
+.text-7xl {
+    font-size: 5.25rem; /* 72px */
 }
 
 
@@ -1202,6 +1229,8 @@ progress {
     }
 }
 
+
+
 @media(min-width: 768px) {
     .col-md {
         flex: 1 0 0%
@@ -1414,6 +1443,7 @@ progress {
     .gy-md-5 {
         --cc-gutter-y: 3rem
     }
+
 }
 
 @media(min-width: 992px) {
@@ -2981,7 +3011,7 @@ textarea.form-control-lg {
     --cc-btn-padding-y: 0.4375rem;
     --cc-btn-font-family: ;
     --cc-btn-font-size: 0.9375rem;
-    --cc-btn-font-weight: 400;
+    --cc-btn-font-weight: 500;
     --cc-btn-line-height: 1.53;
     --cc-btn-color: #697a8d;
     --cc-btn-bg: transparent;
@@ -5189,7 +5219,7 @@ fieldset:disabled .btn {
     --cc-modal-bg: #fff;
     --cc-modal-border-color: var(--cc-border-color-translucent);
     --cc-modal-border-width: 0px;
-    --cc-modal-border-radius: 0.5rem;
+    --cc-modal-border-radius: 1.5rem;
     --cc-modal-box-shadow: 0 2px 16px 0 rgba(67, 89, 113, 0.45);
     --cc-modal-inner-border-radius: calc(0.5rem - 0px);
     --cc-modal-header-padding-x: 1.5rem;
@@ -5299,7 +5329,9 @@ fieldset:disabled .btn {
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-    padding: var(--cc-modal-header-padding);
+    padding-top: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     border-bottom: var(--cc-modal-header-border-width) solid var(--cc-modal-header-border-color);
     border-top-left-radius: var(--cc-modal-inner-border-radius);
     border-top-right-radius: var(--cc-modal-inner-border-radius)
@@ -7751,7 +7783,8 @@ a.invert-bg-dark:focus {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    border-radius: .5rem;
 }
 
 .btn .bx {
@@ -7963,7 +7996,7 @@ label.btn {
     color: #fff;
     background-color: var(--cc-primary);
 }
-.btn-primary: hover{
+.btn-primary:hover{
     color: #fff;
     background-color: #6164ECFF;
 }
@@ -8450,7 +8483,7 @@ label.btn {
 
 .btn-danger {
     color: #fff;
-    background-color: #ff3e1d;
+    background-color: var(--cc-danger);
     border-color: #ff3e1d;
 }
 
@@ -11991,20 +12024,14 @@ form select.selectpicker.is-invalid~.btn {
 }
 
 .modal .btn-close {
-    background-color: #fff;
-    border-radius: .5rem;
     opacity: 1;
-    padding: .635rem;
-    box-shadow: 0 .125rem .25rem rgba(161, 172, 184, .4);
     transition: all .23s ease .1s
 }
 
 html:not([dir=rtl]) .modal .btn-close {
-    transform: translate(23px, -25px)
 }
 
 [dir=rtl] .modal .btn-close {
-    transform: translate(-31px, -25px)
 }
 
 .modal .btn-close:hover,
@@ -12017,17 +12044,14 @@ html:not([dir=rtl]) .modal .btn-close {
 html:not([dir=rtl]) .modal .btn-close:hover,
 html:not([dir=rtl]) .modal .btn-close:focus,
 html:not([dir=rtl]) .modal .btn-close:active {
-    transform: translate(20px, -20px)
 }
 
 [dir=rtl] .modal .btn-close:hover,
 [dir=rtl] .modal .btn-close:focus,
 [dir=rtl] .modal .btn-close:active {
-    transform: translate(-26px, -20px)
 }
 
 .modal .modal-header .btn-close {
-    margin-top: -1.25rem
 }
 
 .modal-footer {
@@ -14695,6 +14719,11 @@ html:not([dir=rtl]) .card .card-separator {
     padding-left: 3rem !important
 }
 
+.px-10 {
+    padding-right: 6rem !important;
+    padding-left: 6rem !important
+}
+
 .py-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important
@@ -15116,6 +15145,14 @@ html:not([dir=rtl]) .card .card-separator {
 
 .rounded-3 {
     border-radius: .5rem !important
+}
+
+.rounded-4 {
+    border-radius: 1rem !important
+}
+
+.rounded-5 {
+    border-radius: 1.5rem !important
 }
 
 .rounded-circle {

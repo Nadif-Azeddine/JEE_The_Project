@@ -1,39 +1,79 @@
-:root{
-    --white : #FFFFFF;
-    --primary: #2948d9;
-    --secondary: #D5C7BC;
-    --third: #E9FAE3;
-    --muted: rgba(231, 245, 226, 0.87);
-    --danger: ;
-    --success: ;
-    --warnning: ;
-}
 
 body{
-    background-color: var(--white);
 }
 
-#page{
-    padding: 2rem;
-    min-height: 100vh;
+.hero{
+    background-image: url("/demo-1.0-SNAPSHOT/jakarta.faces.resource/img/graph-paper.svg.xhtml");
+}
+
+.bottom-gradient{
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 0 !important;
+    background: linear-gradient(0deg, var(--cc-body-bg), transparent);
+}
+
+ul{
+    list-style: none;
+}
+
+/** full calendar customization **/
+.fc-button , .fc .fc-button-primary, .fc .fc-button-primary:focus, .fc-button:focus, .fc:active {
+    background-color: var(--cc-primary) !important;
+    border: 0 solid black !important;
+    outline: 0 solid black !important;
+}
+
+.fc .fc-button-primary:hover {
+   opacity: .8 !important;
+}
+
+.fc-view-harness {
+    border-radius: .375rem;
+    background: var(--cc-white);
+    border: 1px solid #d9dee3 !important;
+    overflow: hidden;
+}
+
+.fc-header-toolbar, .fc-toolbar.fc-header-toolbar, .fc .fc-toolbar.fc-header-toolbar {
+    background: var(--cc-white);
+    border-radius: .375rem;
+    padding: 7px;
+    border: 1px solid #d9dee3 !important;
+    margin-bottom: 5px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px 0;
+}
+.fc-theme-standard .fc-scrollgrid {
+    border: 0 solid black !important;
 }
 
-input{
-    padding: 12px 20px;
-    outline: none !important;
-    border: 1px solid #d3d3d3;
-    background-color: rgb(231 231 231 / 14%);
-    border-radius: 8px;
+.fc-header-toolbar .fc-button {
+    margin-inline: 5px;
+    border-radius: 0.375rem !important;
 }
-input[type="submit"], button{
-    padding: 12px 20px;
-    color: var(--white);
-    outline: none !important;
-    border: 1px solid #d3d3d3;
-    box-shadow: 0 0 0 black;
-    background-color: var(--primary);
-    border-radius: 8px;
+
+.fc td, .fc th {
+    border-bottom: 0 solid black !important;
+    border-right: 0 solid !important;
+}
+
+.fc-event {
+    background-color: var(--cc-primary);
+    border: 0 solid black !important;
+    color: white !important;
+    padding-inline: 2px;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.3em;
+    transition: 200ms all ease;
+}
+
+.fc-event:hover {
+    opacity: .8 !important;
 }

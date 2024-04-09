@@ -1,9 +1,12 @@
 package com.example.demo.services;
 
+import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Stateless
 @Local
@@ -49,6 +52,18 @@ public class UserService {
                     .setParameter("email", email)
                     .getSingleResult();
         }catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public List<User> allOrganizers() {
+        try {
+            TypedQuery<User> query = em.createQuery(
+                    "SELECT u FROM User u WHERE u.role = :roleName", User.class);
+            query.setParameter("roleName", Role.ORGANIZER);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            e.printStackTrace();
             return null;
         }
     }

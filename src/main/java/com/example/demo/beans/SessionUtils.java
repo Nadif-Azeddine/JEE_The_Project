@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.example.demo.beans;
 
 import com.example.demo.entities.User;
 import jakarta.faces.context.FacesContext;

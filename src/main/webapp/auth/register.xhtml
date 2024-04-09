@@ -7,7 +7,7 @@
     <title>Registration</title>
 </h:head>
 <h:body>
-    <ui:composition template="/WEB-INF/layouts/template.xhtml">
+    <ui:composition template="/WEB-INF/layouts/template-no-top.xhtml">
         <ui:define name="content">
             <div class="w-100 d-flex ">
                 <div class="col-md-5 col-12 vh-100 d-flex flex-column justify-content-center align-items-center text-center overflow-y-auto">
@@ -22,12 +22,11 @@
 
                         <div class="mb-3">
                             <h:outputLabel for="email" value="Email"/>
-                            <h:inputText id="email"  styleClass="form-control" value="#{authMB.email}" required="true"
+                            <h:inputText id="email" styleClass="form-control" value="#{authMB.userReg.email}" required="true"
                                          requiredMessage="Email is required">
-                                <f:validator validatorId="emailValidator" />
+                                <f:validator for="email" validatorId="emailValidator"/>
                             </h:inputText>
-                            <h:message for="email" styleClass="error"/>
-
+                            <h:message for="email" showDetail="true"  styleClass="error"/>
                         </div>
 
                         <div class="mb-3">

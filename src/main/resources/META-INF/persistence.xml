@@ -6,6 +6,7 @@
     <persistence-unit name="EventPU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.example.demo.entities.User</class>
+        <class>com.example.demo.entities.Event</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet_jee_getsion" />

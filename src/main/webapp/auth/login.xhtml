@@ -9,7 +9,7 @@
     <title>Login</title>
 </h:head>
 <h:body>
-    <ui:composition template="/WEB-INF/layouts/template.xhtml">
+    <ui:composition template="/WEB-INF/layouts/template-no-top.xhtml">
     <ui:define name="content">
         <div class="w-100 d-flex min-vh-100">
             <div class="col-md-5 col-12 d-flex flex-column justify-content-center align-items-center text-center">
@@ -19,7 +19,7 @@
                         <h:outputLabel for="email" value="Email"/>
                         <h:inputText id="email" styleClass="form-control" value="#{authMB.email}" required="true"
                                      requiredMessage="Password is required"/>
-                        <h:message for="email" showDetail="true" styleClass="error"/>
+                        <h:message for="email" showDetail="true" styleClass="error" />
                     </div>
 
                     <div class="mb-3">
