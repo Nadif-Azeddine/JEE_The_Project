@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+<ui:component>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Event
+    </button>
+    <div class="modal fade" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h:form>
+                        <div class="mb-3">
+                            <h:outputLabel for="title" value="Title"/>
+                            <h:inputText id="title" styleClass="form-control" value="#{eventMB.event.title}" required="true"
+                                         requiredMessage="Title is required"/>
+                            <h:message for="title" showDetail="true" styleClass="error" />
+                        </div>
+
+                        <div class="mb-3">
+                            <h:outputLabel for="description" value="Description"/>
+                            <h:inputTextarea id="description" styleClass="form-control" value="#{eventMB.event.description}" />
+                        </div>
+
+                        <div class="col-12 d-flex mb-3 gap-1 justify-content-between align-items-center">
+
+                        <div class="col-6">
+                            <h:outputLabel for="type" value="Type"/>
+                            <h:selectOneMenu id="type" styleClass="form-select" value="#{eventMB.event.type}" required="true" requiredMessage="Type is required">
+                                <f:selectItem itemLabel="Select Type..." itemValue="" />
+                                <f:selectItems value="#{['CONFERENCE','MEETING','SEMINAR','WORKSHOP','OTHER']}" var="eventType" itemLabel="#{eventType}" itemValue="#{eventType}"/>
+                            </h:selectOneMenu>
+                            <h:message for="type" showDetail="true" styleClass="error" />
+                        </div>
+
+                        <div class="col-6">
+                            <h:outputLabel for="organizer" value="Organzier"/>
+                            <h:selectOneMenu id="organizer" styleClass="form-select" value="#{eventMB.organizer}" >
+                                <f:selectItem itemLabel="Select Type..." itemValue="" />
+                                <f:selectItems value="#{userMB.getAllOrganizers()}" var="organizer" itemLabel="#{organizer.email}" itemValue="#{organizer.id}"/>
+                            </h:selectOneMenu>
+                            <h:message for="organizer" showDetail="true" styleClass="error" />
+                        </div>
+
+                        </div>
+                        <div class="col-12 d-flex mb-3 gap-1 justify-content-between align-items-center">
+
+                            <div class="col-6">
+                                <h:outputLabel for="startDate" value="Start Date"/>
+                                <h:inputText id="startDate" styleClass="form-control mx-1" value="#{eventMB.event.startDate}" required="true"
+                                             requiredMessage="Start Date is required">
+                                    <f:converter converterId="dateConverter" for="startDate"/>
+                                </h:inputText>
+                                <h:message for="startDate" showDetail="true" styleClass="error" />
+                            </div>
+
+                            <div class="col-6">
+                                <h:outputLabel for="endDate" value="End Date"/>
+                                <h:inputText id="endDate" styleClass="form-control mx-1" value="#{eventMB.event.endDate}" required="true"
+                                             requiredMessage="End Date is required">
+                                    <f:converter converterId="dateConverter" for="endDate"/>
+                                </h:inputText>
+                                <h:message for="endDate" showDetail="true" styleClass="error" />
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <h:outputLabel for="color" value="Color"/>
+                            <h:inputText id="color" styleClass="form-control" value="#{eventMB.event.color}" required="true"
+                                         requiredMessage="Color is required"/>
+                            <h:message for="color" showDetail="true" styleClass="error" />
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-subtle" data-bs-dismiss="modal">Cancel</button>
+                            <h:commandButton action="#{eventMB.save()}" styleClass="btn btn-primary" value="Add Event" />
+                        </div>
+
+                    </h:form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ui:component>
+
+</body>
+</html>

@@ -24,6 +24,9 @@ public class User {
     @ManyToMany(mappedBy = "organizers")
     private Set<Event> organizedEvents = new HashSet<>();
 
+    @ManyToMany(mappedBy = "participates")
+    private Set<Event> participedEvents = new HashSet<>();
+
     public User() {
     }
 
@@ -93,5 +96,13 @@ public class User {
 
     public void setOrganizedEvents(Set<Event> organizedEvents) {
         this.organizedEvents = organizedEvents;
+    }
+
+    public Set<Event> getParticipedEvents() {
+        return participedEvents;
+    }
+
+    public void setParticipedEvents(Set<Event> participedEvents) {
+        this.participedEvents = participedEvents;
     }
 }

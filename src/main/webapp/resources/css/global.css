@@ -75,14 +75,14 @@ body, html, div{
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #6164ECFF;
+        background-color: rgba(183, 183, 183, 0.59);
         border-radius: 6px;
     }
 
     /* Target Firefox for scrollbar (fallback) */
     scrollbar-width: thin;
     scrollbar-width: 5px;
-    scrollbar-color: #6164ECFF transparent;
+    scrollbar-color: rgba(183, 183, 183, 0.59) transparent;
 }
 
 
@@ -29187,6 +29187,9 @@ a.bg-vimeo:focus {
     border: 0;
 }
 
+.object-fit-cover {
+    object-fit: cover;
+}
 
 .image-container {
     position: relative;
@@ -29444,4 +29447,17 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+/* shake animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+.shake-animation{
+    animation: shake 0.5s ease-in-out infinite;
 }

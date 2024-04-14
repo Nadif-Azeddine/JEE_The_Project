@@ -77,3 +77,15 @@ ul{
 .fc-event:hover {
     opacity: .8 !important;
 }
+
+
+/**
+
+ */
+.event-options {
+    background: rgba(0, 0, 0, 0.37);
+    transition: all 300ms ease;
+}
+#event-image-container:hover .event-options {
+    display: block !important;
+}

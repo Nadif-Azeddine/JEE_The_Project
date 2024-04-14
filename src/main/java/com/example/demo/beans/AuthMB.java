@@ -108,4 +108,8 @@ public class AuthMB implements Serializable {
         return this.loggedUser != null && this.loggedUser.getRole().equals(Role.ADMIN);
     }
 
+    public boolean isOrganizer(){
+        return this.loggedUser != null && this.loggedUser.getRole().equals(Role.ORGANIZER);
+    }
+
 }

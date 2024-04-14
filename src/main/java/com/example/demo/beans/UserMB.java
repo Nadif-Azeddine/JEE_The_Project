@@ -1,18 +1,19 @@
 package com.example.demo.beans;
 
+import com.example.demo.entities.Event;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class UserMB implements Serializable {
     @EJB
     private UserService userService;
@@ -54,6 +55,12 @@ public class UserMB implements Serializable {
     public List<User> getAllOrganizers()
     {
         return userService.allOrganizers();
+    }
+
+    // get all user's participated events
+    public List<Event> getParticipatedEvents(User user)
+    {
+        return userService.allParticipatedEvents(user);
     }
 
 }

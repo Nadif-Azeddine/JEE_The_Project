@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.entities.Event;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import jakarta.ejb.Local;
@@ -17,6 +18,10 @@ public class UserService {
     public UserService() {
         emf = Persistence.createEntityManagerFactory("EventPU");
         em = emf.createEntityManager();
+    }
+
+    public User findById(Long id) {
+        return em.find(User.class, id);
     }
 
     public void register(User user) {
@@ -66,5 +71,13 @@ public class UserService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<Event> allParticipatedEvents(User user) {
+            String jpql = "SELECT e FROM Event e JOIN e.participates u WHERE u.id = :userId";
+
+            TypedQuery<Event> query = em.createQuery(jpql, Event.class);
+            query.setParameter("userId", user.getId());
+            return query.getResultList();
     }
 }
