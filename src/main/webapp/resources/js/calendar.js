@@ -6,6 +6,7 @@
     const eventTitle = document.getElementById("event-title");
     const eventDescription = document.getElementById("event-description");
     const eventDate = document.getElementById("event-date");
+    const eventLocation = document.getElementById("event-location");
     const eventType = document.getElementById("event-type");
     const eventColor = document.getElementById("event-color");
     const eventOrganizers = document.getElementById("event-organizers");
@@ -53,6 +54,7 @@
             const backgroundColor = event.backgroundColor;
             const start = event.start;
             const end = event.end;
+            const location = event.extendedProps.location;
             const description = event.extendedProps.description;
             const type = event.extendedProps.type;
             const image = event.extendedProps.image;
@@ -60,24 +62,28 @@
 
             eventTitle.textContent = title;
             eventDescription.innerHTML = parseMarkdown(description);
-            eventDate.innerHTML = end ? `<span class="fw-normal">from</span> ${formatDate(start)} <span class="fw-normal">to</span> ${formatDate(end)}` : `<span class="fw-normal">from</span> ${formatDate(start)}`
+            eventDate.innerHTML = end ? `<i class="fa-solid fa-clock"></i> | <span class="fw-normal">from</span> ${formatDate(start)} <span class="fw-normal">to</span> ${formatDate(end)}` : `<span class="fw-normal">from</span> ${formatDate(start)}`;
+            eventLocation.innerHTML = `<i class="fa-solid fa-location-dot"></i>  | ${location}`
             eventColor.style.backgroundColor = `${backgroundColor}`
             eventType.textContent = type;
 
             if (image) {
                 eventImage.innerHTML = `<img alt="${title}" src="${image}" class="w-100 h-px-250 object-fit-cover" />`;
             } else {
-                eventImage.innerHTML = `<img alt="${title}" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.m.wikipedia.org%2Fwiki%2FFile%3ANo_Image_Available.jpg&psig=AOvVaw3Vb98cEPvOKCqeLf_W1Obr&ust=1712936809599000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLDrooXBuoUDFQAAAAAdAAAAABAE" class="w-100 h-px-250 object-fit-cover" />`;
+                eventImage.innerHTML = `<img alt="${title}" src="https://www.goldshipdz.com/l-fr/imgs/no-image.jpg" class="w-100 h-px-250 object-fit-cover" />`;
             }
 
             // organizers details
             const div = document.createElement('div');
             organizers.forEach(organizer => {
                 div.innerHTML += `<p class="mb-0 fw-medium">${organizer.name}</p>
-                                                <p class="mb-0">${organizer.email}</p>`;
+                                                <a href="${organizer.email}" class="mb-0">${organizer.email}</a>`;
             })
             eventOrganizers.innerHTML = div.innerHTML;
 
+            //
+            let savedEvents = document.getElementById(`saved_event_${eventId}`);
+            (savedEvents) ? document.getElementById('star-event').classList.add('text-warning') : document.getElementById('star-event').classList.remove('text-warning')
             eventDetails.classList.remove('d-none');
         }
     });
@@ -112,8 +118,13 @@ function parseMarkdown(text) {
 
 //
 function selectEventId() {
-    console.log(eventId)
-
     document.getElementById("form-event:participedEventId").value = eventId;
     return true;
 }
+
+// close the event
+    function closeEvent() {
+        document.getElementById("event-details").classList.remove("d-flex");
+        document.getElementById("event-details").classList.add("d-none");
+
+    }

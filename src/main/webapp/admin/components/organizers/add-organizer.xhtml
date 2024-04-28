@@ -38,20 +38,11 @@
                             <h:outputLabel for="passwordInput" value="Password" styleClass="label"/>
                             <h:inputSecret id="passwordInput" value="#{userMB.organizer.password}" required="true"
                                            requiredMessage="Password is required" styleClass="form-control" maxlength="30">
-                                <f:validator validatorId="passwordValidator" />
-                                <f:attribute name="password2" value="#{password2}"/>
                             </h:inputSecret>
                             <h:message for="passwordInput" styleClass="error"/>
                         </div>
 
-                        <div class="mb-3">
-                            <h:outputLabel for="passwordInput2" value="Confirm Password" styleClass="label"/>
-                            <h:inputSecret id="passwordInput2" binding="#{password2}" required="true" maxlength="30"
-                                           requiredMessage="Password are not matched" styleClass="form-control"/>
-                            <h:message for="passwordInput2" styleClass="error"/>
-                        </div>
-
-                        <div class="modal-footer">
+                        <div class="modal-footer px-0">
                             <button type="button" class="btn border" data-bs-dismiss="modal">Cancel</button>
                             <h:commandButton value="Add Organizer" styleClass="btn btn-primary" action="#{userMB.addOrganizer()}" />
                         </div>

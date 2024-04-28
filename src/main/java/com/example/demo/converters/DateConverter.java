@@ -22,7 +22,7 @@ public class DateConverter implements Converter {
         }
         try {
             // Parse the date string into a Date object
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = sdf.parse(value);
 
             // Convert the Date object to a timestamp

@@ -9,74 +9,45 @@
     <h:body>
     <ui:composition template="/WEB-INF/layouts/template-events.xhtml">
         <ui:define name="content">
-            <div class="p-5 pt-3" style="margin-top: 48px">
-                <div class="mb-3 d-flex justify-content-between align-items-center">
-                    <div>
-                        <h1 class="font-extrabold text-5xl mb-1">Events</h1>
-                    </div>
+            <div class="py-2 px-3 pt-3" style="margin-top: 48px">
 
-                    <!-- modal saved events -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-events">
-                        Saved Events
-                    </button>
-                    <div class="modal fade" id="modal-events" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content bg-white">
-                                <div class="modal-header pb-1 border-bottom">
-                                    <div>
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Your saved events</h1>
-                                        <p>Lorem ipsum dolor sit amet consectetur.</p>
-                                    </div>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <ui:repeat value="#{userMB.getParticipatedEvents(authMB.loggedUser.id)}" var="saved">
-                                        <div class="w-100 mb-2 d-flex">
-                                            <img src="#{saved.imagePath}" class="object-fit-cover" height="150px" alt="#{saved.title}"/>
-                                            <div class="">
-                                                <h2>#{saved.title}</h2>
-                                            </div>
-                                        </div>
-                                    </ui:repeat>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="my-4" />
                 <div class="w-100 d-flex gap-2">
-
+                    <!--  the calendar -->
                     <div id="calendar" class="flex-grow-1"></div>
 
+                    <!-- show the clicked event -->
                     <div id="event-details" class="col-md-4 col-12 d-none bg-white position-relative rounded-2 p-3 pt-2 border overflow-y-auto" style="height: 800px">
                         <div class="w-100 d-flex mb-1 justify-content-between align-items-baseline" >
                             <p id="event-type" class="mb-0 text-muted"></p>
                             <div id="event-color" class="rounded-pill" style="width: 35px; height: 10px"></div>
                         </div>
 
+                        <!-- show the add to fav and close container when hover -->
                         <div id="event-image-container" class="position-relative w-100 rounded-2 mb-2 overflow-hidden">
                             <div class="position-absolute event-options d-none top-0 start-0 w-100 h-100">
-                                <h:form id="form-event">
+
+                                <h:form id="form-event" styleClass="col-12" onsubmit="#{eventMB.addToParticiped() }">
                                     <h:inputHidden id="participedEventId" value="#{eventMB.participedEventId}" />
-                                    <div id="options" class="w-100 d-flex justify-content-between align-items-center">
-                                        <h:commandButton value="Epingle" onclick="return selectEventId();" styleClass="btn" action="#{eventMB.addToParticiped()}">Epingle</h:commandButton>
-                                        <button class="btn">close</button>
+                                    <div id="options" class="w-100 d-flex p-3 justify-content-between align-items-center">
+                                        <button onclick="return selectEventId();" class="btn fs-5 p-0" id="star-event" ><i class="fa-solid fa-star"></i></button>
+                                        <span class="btn btn-close cursor-pointer fs-5 text-white" onclick="closeEvent()" />
                                     </div>
                                 </h:form>
 
                             </div>
-
+                            <!-- -->
                             <div id="event-image" class="w-100 h-100 overflow-hidden">
                             </div>
                         </div>
 
-                        <h3 class="fs-2 my-1 fw-semibold" id="event-title">Event</h3>
-                        <p class="fw-medium text-sm" id="event-date"></p>
+                        <h3 class="fs-2 mb-2 mt-3 fw-semibold" id="event-title">Event</h3>
+                        <p class="fw-medium mb-0 text-sm" id="event-date"></p>
+                        <p id="event-location" class="fw-medium text-sm"></p>
                         <hr />
                         <p class="fw-medium fs-5 text-muted mb-1">Description.</p>
                         <p id="event-description"></p>
 
-                        <div class="w-100 mt-4 mb-1">
+                         <div class="w-100 mt-4 mb-1">
                             <p class="fw-medium fs-5 text-muted mb-1">Organizers.</p>
                             <div class="d-flex  flex-column w-100 px-2">
                                 <div id="event-organizers" class="mb-1">
@@ -87,9 +58,47 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
+
+            <div class="position-fixed zindex-5 " style="bottom: 10px;right: 7px">
+                <div class="position-relative">
+                        <span style="width: 15px; height: 15px;" class="rounded-circle bg-danger position-absolute top-0 end-0 #{eventMB.isEventToday(userMB.getParticipatedEvents(authMB.loggedUser)) ? 'd-block' : 'd-none'}"></span>
+                <button type="button" class="btn btn-primary  avatar-md p-2 rounded-circle" data-bs-toggle="modal" data-bs-target="#modal-events">
+                    <i class="fa-solid fa-thumbtack"></i>
+                </button>
+                </div>
+            </div>
+
+            <!-- modal saved events -->
+            <div class="modal fade" id="modal-events" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                    <div class="modal-content bg-white">
+                        <div class="modal-header pb-1 border-bottom">
+                            <div>
+                                <h5 class="modal-title fs-5" id="staticBackdropLabel">Your saved events</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- -->
+                            <ui:repeat value="#{userMB.getParticipatedEvents(authMB.loggedUser)}" var="saved">
+                                <input type="hidden" id="saved_event_#{saved.id}"/>
+                                <div class="w-100 mb-3 p-2 gap-3 d-flex rounded-2 #{(helpers.today.date le helpers.parseDate(saved.endDate).date and helpers.today.date ge helpers.parseDate(saved.startDate).date) ? 'border border-2 border-primary' : ''}">
+                                    <img src="#{saved.imagePath}" class="object-fit-cover rounded-2" height="150px" width="50%" alt="#{saved.title}"/>
+                                    <div class="">
+                                        <h4 class="fw-semibold mb-2">#{saved.title} </h4>
+                                        <p class="mb-2"><i class="fa-solid fa-clock"></i> | #{saved.startDate} - #{saved.endDate}</p>
+                                        <p><i class="fa-solid fa-location-dot"></i>  | #{saved.location}</p>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </ui:define>
     </ui:composition>
     </h:body>

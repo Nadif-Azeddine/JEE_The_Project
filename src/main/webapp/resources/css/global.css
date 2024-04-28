@@ -2094,7 +2094,7 @@ progress {
     --cc-table-border-color: #d9dee3;
     --cc-table-accent-bg: transparent;
     --cc-table-striped-color: var(--cc-body-color);
-    --cc-table-striped-bg: #f9fafb;
+    --cc-table-striped-bg: #fff;
     --cc-table-active-color: var(--cc-body-color);
     --cc-table-active-bg: rgba(67, 89, 113, 0.1);
     --cc-table-hover-color: var(--cc-body-color);
@@ -13856,7 +13856,7 @@ html:not([dir=rtl]) .card .card-separator {
 }
 
 .border-primary {
-    border-color: #696cff !important
+    border-color: var(--cc-primary) !important
 }
 
 .border-secondary {
@@ -29450,14 +29450,24 @@ input[type=number] {
 }
 
 /* shake animation */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-2px); }
-    50% { transform: translateX(2px); }
-    75% { transform: translateX(-2px); }
-    100% { transform: translateX(0); }
+@keyframes color-change {
+    0%,100%{
+        border-color:#ff1493;
+    }
+
+    25%{
+        border-color:#8b4513;
+    }
+
+    50%{
+        border-color:#0091EA;
+    }
+
+    75%{
+        border-color:#9400d3;
+    }
 }
 
 .shake-animation{
-    animation: shake 0.5s ease-in-out infinite;
+    animation: color-change 2s ease-in-out infinite !important;
 }

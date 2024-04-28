@@ -40,7 +40,7 @@
                      <div class="modal-header">
                         <div class="d-flex gap-2">
                            <h5 class="modal-title" id="exampleModalLabel">Edit Event</h5>
-                           <button onclick="editWithAi(#{event.id})" class="btn border py-0 px-2" id="btnAi_#{event.id}">AI</button>
+                           <button onclick="editWithAi(#{event.id})" class="btn border shake-animation py-0 px-2" id="btnAi_#{event.id}">AI</button>
                         </div>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -51,6 +51,13 @@
                               <h:outputLabel for="title" value="Title"/>
                               <h:inputText id="title" styleClass="form-control title_#{event.id}" value="#{event.title}" required="true"
                                            requiredMessage="Title is required"/>
+                              <h:message for="title" showDetail="true" styleClass="error" />
+                           </div>
+
+                           <div class="mb-3">
+                              <h:outputLabel for="location" value="Location"/>
+                              <h:inputText id="location" styleClass="form-control" value="#{event.location}" required="true"
+                                           requiredMessage="Location is required"/>
                               <h:message for="title" showDetail="true" styleClass="error" />
                            </div>
 

@@ -12,8 +12,9 @@
 
        <div class="d-flex align-items-center justify-content-center gap-4">
            <h:link styleClass="font-medium text-white" value="Home" outcome="/index" />
+           <h:link styleClass="font-medium text-white" value="Events" outcome="/events/index" rendered="#{authMB.loggedUser != null}" />
            <h:link styleClass="font-medium text-white" value="Dashboard" outcome="/admin/index" rendered="#{authMB.isAdmin()}" />
-           <h:link styleClass="font-medium text-white" value="Events" outcome="/organizer/index" rendered="#{authMB.isOrganizer()}" />
+           <h:link styleClass="font-medium text-white" value="Organizer Space" outcome="/organizer/index" rendered="#{authMB.isOrganizer()}" />
            <h:link styleClass="font-medium text-white" value="Login" outcome="/auth/login" rendered="#{authMB.loggedUser == null}" />
            <h:link styleClass="font-medium text-white" value="Register" outcome="/auth/register" rendered="#{authMB.loggedUser == null}"/>
 

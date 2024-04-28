@@ -63,4 +63,5 @@ public class UserMB implements Serializable {
         return userService.allParticipatedEvents(user);
     }
 
+
 }

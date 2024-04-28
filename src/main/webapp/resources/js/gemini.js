@@ -44,16 +44,17 @@ async function editWithAi(id) {
     const title = document.querySelector(`.title_${id}`);
     const description = document.querySelector(`.description_${id}`);
 
-    btnAi.classList.add("shake-animation");
-
-    console.log(title.value)
     if (title === null || title.value === "") return "provide a title first !!!";
+
+    btnAi.classList.add("bg-primary", "text-white");
+    btnAi.classList.remove("border");
 
     const prompt  = `based on this title : ${title.value}, create me an interesting description use html emojis for event within 10 line, and use markdown, consider escaping special characters for safe json parsing. use backslash to escape special characters, for the title of description dont make it size too big in font size.`;
     const generatedText = await generateText(prompt);
-    btnAi.classList.remove("shake-animation");
+    btnAi.classList.remove("bg-primary", "text-white");
+    btnAi.classList.add("border");
+
 
     description.value = generatedText;
-    console.log(generatedText)
 }
 

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +28,8 @@ public class EventMB implements Serializable {
     private EventService eventService;
     @Inject
     private AuthMB authMB;
+    @Inject
+    private UserMB userMB;
     private Event event;
 
     // used to get the event id from the json events in the calendar
@@ -78,6 +81,7 @@ public class EventMB implements Serializable {
 
     public String save() {
       try {
+          this.event.setImagePath("https://www.goldshipdz.com/l-fr/imgs/no-image.jpg");
          Event savedEvent = eventService.saveEvent(this.event);
          if (savedEvent == null) {
              return "admin?error=error saving event";
@@ -159,6 +163,7 @@ public class EventMB implements Serializable {
             eventJson.put("description", (event.getDescription()));
             eventJson.put("start", event.getStartDate().toString());
             eventJson.put("end", event.getEndDate().toString());
+            eventJson.put("location", event.getLocation());
             eventJson.put("backgroundColor", event.getColor());
             eventJson.put("type", event.getType());
             eventJson.put("image", event.getImagePath());
@@ -182,16 +187,42 @@ public class EventMB implements Serializable {
 
     // save and remove event to participated list
     public String addToParticiped() {
-        System.out.println("######################################" + participedEventId);
         if (participedEventId == null || authMB.getLoggedUser().getId() == null) return "events";
+
+        // check if the event is already saved if yes, remove it,
+        // if not add it.
+        if(this.isEventInParticipated(authMB.getLoggedUser(), Long.parseLong(participedEventId))){
+            eventService.removeEventFromParticipates(Long.parseLong(participedEventId), authMB.getLoggedUser().getId());
+            return "events";
+        }
         eventService.addEventToParticipate(Long.parseLong(participedEventId), authMB.getLoggedUser().getId());
         return "events";
     }
+
     public String removeFromParticiped(Long eventId) {
 
         eventService.removeEventFromParticipates(eventId, authMB.getLoggedUser().getId());
         return "events";
     }
 
+    // check if an event is in the list of participated of the user
+    public boolean isEventInParticipated(User user, Long eventId) {
+        List<Event> events = userMB.getParticipatedEvents(user);
+        for (Event event : events) {
+            if (event.getId().equals(eventId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEventToday (List<Event> events)
+    {
+        Date now = new Date();
+        for (Event event : events) {
+            if (event.getEndDate().after(now) && event.getStartDate().before(now)) return true;
+        }
+        return false;
+    }
 
 }
